@@ -1,0 +1,13 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# Environment secrets (never commit these)
+.env
