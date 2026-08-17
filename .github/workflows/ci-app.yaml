@@ -1,0 +1,30 @@
+name: CI - Build, Scan, and Validate
+
+on:
+  push:
+    paths:
+      - 'apps/demo-service/**'
+  pull_request:
+    paths:
+      - 'apps/demo-service/**'
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t demo-service:ci-${{ github.sha }} ./apps/demo-service
+
+      - name: Run Trivy vulnerability scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: demo-service:ci-${{ github.sha }}
+          severity: HIGH,CRITICAL
+          exit-code: 0
+          format: table
+
+      - name: Confirm image builds successfully
+        run: echo "Image demo-service:ci-${{ github.sha }} built and scanned successfully"
