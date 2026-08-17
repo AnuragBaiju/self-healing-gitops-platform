@@ -1,5 +1,7 @@
 # Self-Healing GitOps Platform
 
+![CI](https://github.com/AnuragBaiju/self-healing-gitops-platform/actions/workflows/ci-app.yaml/badge.svg)
+
 A production-pattern Kubernetes platform that automates deployments end-to-end: push code to Git, and the system builds, tests, gradually rolls it out, watches real metrics, and automatically rolls back if anything breaks - with zero manual intervention.
 
 ## What this proves
