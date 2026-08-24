@@ -34,4 +34,6 @@ else
 fi
 
 echo ""
+rm -f terraform/terraform.tfstate terraform/terraform.tfstate.backup
+
 echo "Teardown complete. Run ./scripts/setup.sh to rebuild from scratch."
