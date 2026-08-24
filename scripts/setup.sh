@@ -26,8 +26,8 @@ cd ..
 
 echo "[4/8] Building and loading app image..."
 cd apps/demo-service
-docker build -t demo-service:v1 .
-kind load docker-image demo-service:v1 --name "$CLUSTER_NAME"
+docker build -t demo-service:v2 .
+kind load docker-image demo-service:v2 --name "$CLUSTER_NAME"
 cd ../..
 
 echo "[5/8] Installing Argo Rollouts..."
