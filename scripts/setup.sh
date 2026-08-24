@@ -21,7 +21,7 @@ echo "[3/8] Provisioning cluster with Terraform..."
 cd terraform
 terraform init
 terraform apply -auto-approve
-CLUSTER_NAME=$(terraform output -raw cluster_name 2>/dev/null || echo "self-healing-demo-tf")
+CLUSTER_NAME="self-healing-demo-tf"
 cd ..
 
 echo "[4/8] Building and loading app image..."

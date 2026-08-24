@@ -23,3 +23,7 @@ resource "kind_cluster" "self_healing_demo" {
   }
 }
 # terraform config for local kind cluster
+
+output "cluster_name" {
+  value = kind_cluster.self_healing_demo.name
+}
