@@ -58,6 +58,10 @@ echo "[8/8] Pointing ArgoCD at the config repo..."
 sleep 20
 kubectl apply -f ../self-healing-gitops-config/k8s/argocd-application.yaml
 
+echo "Triggering initial sync..."
+kubectl -n argocd patch application demo-service --type merge -p '{"operation":{"initiatedBy":{"username":"setup-script"},"sync":{"revision":"HEAD"}}}'
+sleep 15
+
 echo ""
 echo "Setup complete."
 echo "Run ./scripts/open-dashboards.sh to view Grafana, Prometheus, and ArgoCD."
