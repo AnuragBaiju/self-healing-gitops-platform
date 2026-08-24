@@ -65,3 +65,4 @@ sleep 15
 echo ""
 echo "Setup complete."
 echo "Run ./scripts/open-dashboards.sh to view Grafana, Prometheus, and ArgoCD."
+echo "If kubectl get pods shows nothing after a minute, run: argocd app sync demo-service"
