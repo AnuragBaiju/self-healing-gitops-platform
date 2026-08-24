@@ -44,7 +44,7 @@ echo "[6b/8] Installing External Secrets Operator..."
 helm repo add external-secrets https://charts.external-secrets.io >/dev/null
 helm repo update >/dev/null
 kubectl create namespace external-secrets --dry-run=client -o yaml | kubectl apply -f -
-helm install external-secrets external-secrets/external-secrets -n external-secrets
+helm install external-secrets external-secrets/external-secrets -n external-secrets --version 0.9.20
 
 echo "[6c/8] Installing LitmusChaos operator..."
 kubectl create namespace litmus --dry-run=client -o yaml | kubectl apply -f -
