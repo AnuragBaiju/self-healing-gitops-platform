@@ -15,25 +15,25 @@ done
 
 echo "Destroying cluster via Terraform..."
 cd terraform
-if [ -f terraform.tfstate ]; then
-  terraform destroy -auto-approve
-else
-  echo "  No Terraform state found, skipping."
-fi
+terraform destroy -auto-approve || echo "  Terraform destroy failed or nothing to destroy, continuing..."
 cd ..
 
-echo "Checking for any leftover kind clusters..."
-LEFTOVER=$(kind get clusters 2>/dev/null)
-if [ -n "$LEFTOVER" ]; then
-  echo "$LEFTOVER" | while read -r cluster; do
-    echo "  Deleting leftover cluster: $cluster"
-    kind delete cluster --name "$cluster"
-  done
-else
-  echo "  None found."
-fi
+echo "Deleting any kind clusters directly (belt and suspenders)..."
+for cluster in $(kind get clusters 2>/dev/null); do
+  echo "  Deleting cluster: $cluster"
+  kind delete cluster --name "$cluster"
+done
+
+echo "Cleaning up Terraform state files..."
+rm -f terraform/terraform.tfstate terraform/terraform.tfstate.backup
 
 echo ""
-rm -f terraform/terraform.tfstate terraform/terraform.tfstate.backup
+echo "Verifying teardown..."
+REMAINING=$(kind get clusters 2>/dev/null)
+if [ -n "$REMAINING" ]; then
+  echo "  WARNING: clusters still present: $REMAINING"
+else
+  echo "  Confirmed: no clusters remain."
+fi
 
 echo "Teardown complete. Run ./scripts/setup.sh to rebuild from scratch."
