@@ -32,7 +32,7 @@ cd ../..
 
 echo "[5/8] Installing Argo Rollouts..."
 kubectl create namespace argo-rollouts --dry-run=client -o yaml | kubectl apply -f -
-kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml --server-side --force-conflicts
 
 echo "[6/8] Installing Prometheus + Grafana..."
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts >/dev/null
