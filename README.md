@@ -41,8 +41,22 @@ Chaos engineering: LitmusChaos
 
 ## Running it locally
 
-kind create cluster --name self-healing-demo
-git clone https://github.com/AnuragBaiju/self-healing-gitops-config.git
-kubectl apply -f self-healing-gitops-config/k8s/
+Prerequisites: Docker Desktop installed and running.
 
-ArgoCD then takes over. Further changes go through git push to the config repo, not kubectl apply.
+git clone https://github.com/AnuragBaiju/self-healing-gitops-platform.git
+cd self-healing-gitops-platform
+./scripts/setup.sh
+
+This single script provisions the cluster with Terraform, builds and loads the app image, and installs Argo Rollouts, Prometheus, Grafana, External Secrets Operator, LitmusChaos, and ArgoCD, then points ArgoCD at the config repo.
+
+Once setup finishes:
+
+./scripts/open-dashboards.sh
+
+This opens Grafana, Prometheus, and ArgoCD locally with no manual port-forwarding required, and prints the login credentials for each.
+
+To tear the whole platform down cleanly:
+
+./scripts/teardown.sh
+
+ArgoCD takes over from here. Further changes go through git push to the config repo, not kubectl apply.
