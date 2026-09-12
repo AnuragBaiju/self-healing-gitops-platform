@@ -18,3 +18,4 @@ terraform/*.tfstate
 terraform/*.tfstate.backup
 terraform/*-config
 terraform/*-config
+credentials.txt

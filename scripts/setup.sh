@@ -66,3 +66,13 @@ echo ""
 echo "Setup complete."
 echo "Run ./scripts/open-dashboards.sh to view Grafana, Prometheus, and ArgoCD."
 echo "If kubectl get pods shows nothing after a minute, run: argocd app sync demo-service"
+
+echo "Saving credentials to credentials.txt..."
+GRAFANA_PASS=$(kubectl get secret -n observability monitoring-grafana -o jsonpath="{.data.admin-password}" 2>/dev/null | base64 -d)
+ARGOCD_PASS=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" 2>/dev/null | base64 -d)
+cat > credentials.txt << CREDEOF
+Grafana:  http://localhost:3000  user: admin  pass: $GRAFANA_PASS
+ArgoCD:   https://localhost:8080  user: admin  pass: $ARGOCD_PASS
+CREDEOF
+echo "Credentials saved to credentials.txt"
+
